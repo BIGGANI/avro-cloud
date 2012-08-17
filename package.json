@@ -4,9 +4,24 @@
 	"author": "Mehdi Hasan Khan <mhasan@omicronlab.com>",
   "version": "0.0.1",
   "main": "server.js",
+  "keywords": [
+    "comet",
+    "transliteration",
+    "server"
+  ],
+  "scripts": {
+     "start": "node ./server.js"
+   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omicronlab/avro-cloud.git"
+  },
   "dependencies": {
     "socket.io": "0.9.x"
   },
   "private": "true",
-  "engine": "node >= 0.8.6"
+  "engine": {
+    "node": ">= 0.8.6"
+  },
+  "license": "MPL 1.1"
 }
