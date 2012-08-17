@@ -27,17 +27,28 @@
 
 var http = require('http');
 var url = require('url');
+var fs = require('fs');
+var sio = require('socket.io');
 
 var AvroClassic = require('./lib/avroclassic');
 var avroclassic = new AvroClassic();
 
-http.createServer(function(requset, response){
+var server = http.createServer(function(requset, response){
 	var input = url.parse(decodeURI(requset.url), true).query.input;
-	if (input){
-		response.writeHead(200, {'Content-Type': 'text/html'});
-		response.end(avroclassic.parse(input));	
-	} else {
-		response.writeHead(401);
-		response.end();
-	}
-}).listen(8080);
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	response.end(fs.readFileSync('./index.html'));	
+});
+
+server.listen(8080, function(){
+	console.log('Server listening at http://localhost:8080/');
+});
+
+// Attach the socket.io server
+io = sio.listen(server);
+// Define a message handler
+io.sockets.on('connection', function (socket) {
+  socket.on('message', function (msg) {
+    console.log('Received: ', msg);
+    socket.send(avroclassic.parse(msg));
+  });
+});

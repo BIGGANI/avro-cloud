@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  
+  <style type="text/css">
+    #bangla { padding: 0px; list-style-type: none;}
+    #bangla li { padding: 2px 0px; border-bottom: 1px solid #ccc; }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+  $(function(){
+    var socket = io.connect();
+    
+    socket.on('connect', function () {
+      socket.on('message', function(bangla) {
+        $('#bangla').empty();
+        $('#bangla').append($('<li></li>').text(bangla));
+      });
+      socket.on('disconnect', function() {
+        $('#bangla').append('<li>Disconnected</li>');
+      });
+    });
+
+    var $it = $('#inputtext');
+    
+    $it.keyup(function(){
+      socket.send($it.val());
+    });
+    
+    $it.keypress(function(e) {
+      if(e.which === 13 || e.which === 32) {
+        e.preventDefault();
+        $it.val('');
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+   <input type="text" id="inputtext">
+    <hr>
+    <ul id="bangla"></ul>
+</body>
+</html>
