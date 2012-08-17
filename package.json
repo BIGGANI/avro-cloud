@@ -1,0 +1,12 @@
+{
+  "name": "avro-cloud",
+	"description": "A distributed Avro transliteration service featuring auto-learning ability with anonymous crowd-sourced data.",
+	"author": "Mehdi Hasan Khan <mhasan@omicronlab.com>",
+  "version": "0.0.1",
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": "0.9.x"
+  },
+  "private": "true",
+  "engine": "node >= 0.8.6"
+}
