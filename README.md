@@ -1,6 +1,6 @@
 #Avro Cloud
 
-A distributed Avro Phonetic parser featuring auto-learning ability with anonymous crowd-sourced data.
+A distributed Avro transliteration service featuring auto-learning ability with anonymous crowd-sourced data.
 
 ###Why
 
