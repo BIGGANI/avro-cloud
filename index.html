@@ -15,8 +15,10 @@
 		
     socket.on('message', function(data) {
       $('#bangla').empty();
-      $('#bangla').append($('<li></li>').text(data.bn));
-  	  $('#status').text('Generated in ' + data.taken + 'microsecend!');
+	  data.bn.forEach(function(item){
+		  $('#bangla').append($('<li></li>').text(item));
+	  });
+  	  $('#status').text('Generated in ' + data.taken + ' microseconds!');
     });
 	  
     socket.on('disconnect', function() {

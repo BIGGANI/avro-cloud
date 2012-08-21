@@ -34,8 +34,6 @@ var WorkQueue = require('mule').WorkQueue;
 var nWorkers = 1;
 var workQueue = new WorkQueue('./lib/worker.js', nWorkers);
 
-
-
 var server = http.createServer(function(requset, response){
 	var input = url.parse(decodeURI(requset.url), true).query.input;
 	response.writeHead(200, {'Content-Type': 'text/html'});
