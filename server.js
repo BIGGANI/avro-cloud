@@ -30,8 +30,11 @@ var url = require('url');
 var fs = require('fs');
 var sio = require('socket.io');
 
-var AvroClassic = require('./lib/avroclassic');
-var avroclassic = new AvroClassic();
+var WorkQueue = require('mule').WorkQueue;
+var nWorkers = 1;
+var workQueue = new WorkQueue('./lib/worker.js', nWorkers);
+
+
 
 var server = http.createServer(function(requset, response){
 	var input = url.parse(decodeURI(requset.url), true).query.input;
@@ -44,11 +47,14 @@ server.listen(8080, function(){
 });
 
 // Attach the socket.io server
-io = sio.listen(server);
+var io = sio.listen(server);
+io.set('log level', 1); // warn level logging
+
 // Define a message handler
 io.sockets.on('connection', function (socket) {
-  socket.on('message', function (msg) {
-    console.log('Received: ', msg);
-    socket.send(avroclassic.parse(msg));
+  socket.on('message', function (msg) {    
+	workQueue.enqueue(msg, function (result) {
+		socket.json.send(result);
+	});
   });
 });
